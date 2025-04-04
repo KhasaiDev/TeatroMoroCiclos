@@ -61,13 +61,36 @@ public class App {
             System.out.println();
         }
 
-        //Ahora le solicitamos su eleccion
-        System.out.print("Ingrese la fila (1-3): ");
-        int fila = scanner.nextInt() - 1;
-
-        System.out.print("Ingrese el numero del asiento (1-3): ");
-        int asiento = scanner.nextInt() - 1;
-
+        //Ahora le solicitamos su eleccion y dentro de un bucle para repetirla sin encesidad de volver al menu principal
+        int fila = -1;
+        int asiento = -1;
+        
+        // Bucle para validar fila
+        while (true) {
+            System.out.print("Ingrese la fila (1-3): ");
+            fila = scanner.nextInt() - 1;
+        
+            if (fila >= 0 && fila < asientos.length) {
+                break; // valor correcto, salimos del bucle
+            } else {
+                System.out.println("Fila no válida. Intente nuevamente.");
+                presionarEnterParaContinuar(scanner);
+            }
+        }
+        
+        // Bucle para validar asiento
+        while (true) {
+            System.out.print("Ingrese el número del asiento (1-3): ");
+            asiento = scanner.nextInt() - 1;
+        
+            if (asiento >= 0 && asiento < asientos[fila].length) {
+                break; // valor correcto, salimos del bucle
+            } else {
+                System.out.println("Asiento no válido. Intente nuevamente.");
+                presionarEnterParaContinuar(scanner);
+            }
+        }
+        
         //Ahora vamos a modificarlo visualmente para que al volver a entrar se vea ocupado.
         if (asientos[fila][asiento] == '*') {
             asientos[fila][asiento] = 'X';
@@ -81,7 +104,8 @@ public class App {
 
     }
 
-    //Quise implementar este metodo para hacer mas comoda la interfaz de la terminal para que los mensajes se alcancen a leer y luego el usuario pueda continuar.
+    //Quise implementar este metodo para hacer mas comoda la interfaz de la terminal para que los mensajes se alcancen a leer de manera mas comoda.
+    //Lo que hace es esperar a que el usuario presione enter para continuar, de esta manera no se pierde la vista de lo que se estaba haciendo.
     public static void presionarEnterParaContinuar(Scanner scanner) {
         System.out.println("Presione Enter para continuar...");
         scanner.nextLine(); // limpiar buffer
